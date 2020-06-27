@@ -51,7 +51,7 @@ const tourSchema = new mongoose.Schema(
         validator: function (val) {
           return val < this.price;
         },
-        message: 'Discount price ({VALUE}) must be less than price'
+        message: 'Discount price ({VALUE}) must be less than regular price'
       }
     },
     summary: {
@@ -122,7 +122,7 @@ tourSchema.post(/^find/, function (docs, next) {
   console.log(`Query took ${Date.now() - this.start} miliseconds`);
   next();
 });
-
+// AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
   next();

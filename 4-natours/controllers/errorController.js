@@ -12,9 +12,9 @@ const handleValidationErrorDB = (err) => {
   return new AppError(message, 400);
 }
 const handleDuplicateFieldsDB = (err) => {
-  const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
   console.log(value);
-  const message = `Duplicate field ${value}. Try another one`;
+  const message = `Duplicate fields value~~ ${value}. Try another one`;
   return new AppError(message, 400)
   
 }
@@ -39,7 +39,7 @@ const sendErrorProd = (err, res) => {
   }else{
     console.error("Error", err)
     res.status(500).json({
-      status: 'Fail',
+      status: 'Error',
       message: "Something went wrong"
     })
   }
@@ -58,7 +58,7 @@ module.exports = (err, req, res, next) => {
     if(error.code === 11000) error = handleDuplicateFieldsDB(error);
     if(error.name === "ValidationError") error = handleValidationErrorDB(error)
 
-    sendErrorProd(err, res);
+    sendErrorProd(error, res);
   }
 };
 
