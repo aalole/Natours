@@ -10,6 +10,7 @@ const appError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
@@ -58,12 +59,13 @@ app.use(
 // testing middleware
 app.use((req, res, next) => {
   req.getReqTime = new Date().toISOString();
-  console.log(req.headers);
+  // console.log(req.headers);
   next();
 });
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 //Handling wrong url errors
 app.all('*', (req, res, next) => {

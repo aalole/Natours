@@ -1,7 +1,7 @@
+// All User related functions except factory handlerFactory
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const handlerFactory = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -10,6 +10,18 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+
+  //  SEND RESPONSE
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
+    },
+  });
+});
 
 // update authenticated and valid user data
 exports.updateMe = catchAsync(async (req, res, next) => {
@@ -38,10 +50,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     },
   });
 });
-exports.getMe = (req, res, next) => { 
-  req.params.id = req.user.id;
-  next();
-}
+
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
   res.status(204).json({
@@ -53,13 +62,26 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 exports.postUsers = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'this route does not exist. Please use /sign up instead',
+    message: 'this route is not yet defined',
   });
 };
 
-exports.getAllUsers = handlerFactory.getAll(User);
-exports.getSingleUser = handlerFactory.getOne(User);
+exports.getSingleUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'this route is not yet defined',
+  });
+};
 
-// NOTE: DO NOT CHANGE PASSWORD HERE!
-exports.updateUser = handlerFactory.updateOne(User);
-exports.deleteUser = handlerFactory.deleteOne(User);
+exports.updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'this route is not yet defined',
+  });
+};
+exports.deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'this route is not yet defined',
+  });
+};
