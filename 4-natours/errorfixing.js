@@ -48,7 +48,7 @@ exports.createTour = async (req, res) => {
     };
 
     exports.deleteTour = (a, b) => {
-            console.log(a, b);
+            // console.log(a, b);
             
           if (req.params.id * 1 > tours.length) {
             return res.status(404).json({

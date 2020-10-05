@@ -94,7 +94,7 @@ const tourSchema = new mongoose.Schema(
       address: String,
       description: String,
     },
-    location: [
+    locations: [
       {
         type: {
           type: String,
@@ -137,7 +137,7 @@ tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
-// DOCUMENT MIDDLEWARE  It runs between .save() and .reate() {!insertMany() oo!!}
+// DOCUMENT MIDDLEWARE  It runs between .save() and .create() {!insertMany() oo!!}
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();

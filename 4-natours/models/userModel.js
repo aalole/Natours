@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
-    // required: [true, 'A User must have a picture'],
+    default: 'default.jpg'
   },
   role: {
     type: String,
